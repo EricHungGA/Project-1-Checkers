@@ -42,9 +42,23 @@ button {
 
 /* add button hover mechanics here later */
 
-game-piece {
+/* This is player 1s piece design */
+game-piece1 {
+    height: 6vmin;
+    width: 6vmin;
+    border-radius: 50%;
+    background-color: yellow;
+}
+
+/* This is player 2s piece design, its name semantically is "-1" */
+game-piece-1 {
     height: 6vmin;
     width: 6vmin;
     border-radius: 50%;
     background-color: black;
+}
+
+/* This is no player's tile */
+game-piece0 {
+    
 }

@@ -28,7 +28,7 @@ const type1 = document.querySelectorAll('.type-1'); // this is the pink tile aka
 // init function that sets up all the state variables, then calls render
 function init() {
     board = [
-        [0,0,0,0,0,0,0,0], // column 0 (on far left side of board)
+        [1,-1,0,1,0,0,0,0], // column 0 (on far left side of board)
         [0,0,0,0,0,0,0,0], // column 1
         [0,0,0,0,0,0,0,0], // column 2
         [0,0,0,0,0,0,0,0], // column 3
@@ -44,12 +44,12 @@ function init() {
 }
 
 
-// This is function for generating a piece on a tile
-function generatePiece(colIdx, rowIdx) {
-    const newPiece = document.createElement("game-piece");
-    const position = document.getElementById(`c${colIdx}r${rowIdx}`);
-    position.appendChild(newPiece);
-}
+// This is function for generating a piece on a tile for either player depending on turn
+// function generatePiece(colIdx, rowIdx, turn) {
+//     const newPiece = document.createElement(`game-piece-${turn}`);
+//     const position = document.getElementById(`c${colIdx}r${rowIdx}`);
+//     position.appendChild(newPiece);
+// }
 
 // This is a function to create the starting position for all pieces when a game starts
 function startingPieces() {
@@ -63,7 +63,32 @@ function startingPieces() {
 
 function render() {
     renderBoard();
-    rendeerMessage();
-    renderControls();
+    // renderMessage();
+    // renderControls();
 
 }
+
+// This function will render the pieces on the board every turn and on initialize
+function renderBoard() {
+    board.forEach(function(colArr, colIdx){
+        //Iterating over the cells in the colArray to get row
+        colArr.forEach(function(cellVal, rowIdx){
+            if (!cellVal) {
+                return
+            }
+            const newPiece = document.createElement(`game-piece${cellVal}`);
+            const position = document.getElementById(`c${colIdx}r${rowIdx}`);
+            if (position.hasChildNodes()) {
+                console.log('there is already child')
+                return
+            }
+            position.appendChild(newPiece);
+            console.log('you added child')
+        });
+    });
+}
+
+
+
+
+init();
