@@ -28,18 +28,17 @@ const type1 = document.querySelectorAll('.type-1'); // this is the pink tile aka
 // init function that sets up all the state variables, then calls render
 function init() {
     board = [
-        [1,-1,0,1,0,0,0,0], // column 0 (on far left side of board)
-        [0,0,0,0,0,0,0,0], // column 1
-        [0,0,0,0,0,0,0,0], // column 2
-        [0,0,0,0,0,0,0,0], // column 3
-        [0,0,0,0,0,0,0,0], // column 4
-        [0,0,0,0,0,0,0,0], // column 5
-        [0,0,0,0,0,0,0,0], // column 6
-        [0,0,0,0,0,0,0,0], // column 7 (on far right side of board)
+        [1,0,1,0,0,0,-1,0], // column 0 (on far left side of board)
+        [0,1,0,0,0,-1,0,-1], // column 1
+        [1,0,1,0,0,0,-1,0], // column 2
+        [0,1,0,0,0,-1,0,-1], // column 3
+        [1,0,1,0,0,0,-1,0], // column 4
+        [0,1,0,0,0,-1,0,-1], // column 5
+        [1,0,1,0,0,0,-1,0], // column 6
+        [0,1,0,0,0,-1,0,-1], // column 7 (on far right side of board)
     ];
     turn = 1;
     winner = null;
-    startingPieces();
     render();
 }
 
@@ -50,11 +49,6 @@ function init() {
 //     const position = document.getElementById(`c${colIdx}r${rowIdx}`);
 //     position.appendChild(newPiece);
 // }
-
-// This is a function to create the starting position for all pieces when a game starts
-function startingPieces() {
-
-}
 
 // render function that calls multiple sub types of render functions that are
 // more modular, this will include things like render board, render message,
@@ -68,7 +62,7 @@ function render() {
 
 }
 
-// This function will render the pieces on the board every turn and on initialize
+// This function will render the pieces on the board, it should be called every turn and on initialize
 function renderBoard() {
     board.forEach(function(colArr, colIdx){
         //Iterating over the cells in the colArray to get row
@@ -87,8 +81,6 @@ function renderBoard() {
         });
     });
 }
-
-
 
 
 init();

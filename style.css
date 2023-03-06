@@ -25,12 +25,12 @@ body {
     align-items: center;
 }
 
-/* All my pieces will live on this type-1 tile no matter what */
+/* Pieces should never be on this type-1 tile */
 .type-1 {
     background-color: pink;
 }
 
-/* Pieces should never be on this type-2 tile */
+/* All my pieces will live on this type-2 tile no matter what */
 .type-2 {
     background-color: antiquewhite;
 }
@@ -60,5 +60,5 @@ game-piece-1 {
 
 /* This is no player's tile */
 game-piece0 {
-    
+
 }
