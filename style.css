@@ -20,12 +20,17 @@ body {
 
 #board > div {
     border: 0.1vmin solid goldenrod;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* All my pieces will live on this type-1 tile no matter what */
 .type-1 {
     background-color: pink;
 }
 
+/* Pieces should never be on this type-2 tile */
 .type-2 {
     background-color: antiquewhite;
 }
@@ -36,3 +41,10 @@ button {
 }
 
 /* add button hover mechanics here later */
+
+game-piece {
+    height: 6vmin;
+    width: 6vmin;
+    border-radius: 50%;
+    background-color: black;
+}

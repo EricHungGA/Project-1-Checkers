@@ -17,8 +17,8 @@ let turn; // 1 or -1 for each player
 let winner; // null = no winner, 1 / -1 = winner, add in extra scenarios for deadlocks etc. afterwards
 
 /*----- cached elements  -----*/
-// this will have the elements required from the dom to get the board setup
-// will most likely include board div layout
+const boardEl = document.getElementById("board"); // this is the board parent with the tile-child divs
+const type1 = document.querySelectorAll('.type-1'); // this is the pink tile aka piece tiles
 
 /*----- event listeners -----*/
 // setup event listeners for board spots that the players select to move their pieces
@@ -39,10 +39,31 @@ function init() {
     ];
     turn = 1;
     winner = null;
+    startingPieces();
     render();
+}
+
+
+// This is function for generating a piece on a tile
+function generatePiece(colIdx, rowIdx) {
+    const newPiece = document.createElement("game-piece");
+    const position = document.getElementById(`c${colIdx}r${rowIdx}`);
+    position.appendChild(newPiece);
+}
+
+// This is a function to create the starting position for all pieces when a game starts
+function startingPieces() {
+
 }
 
 // render function that calls multiple sub types of render functions that are
 // more modular, this will include things like render board, render message,
 // render controls, and more. Will also need to setup the piece logic and 
 // win conditions in here
+
+function render() {
+    renderBoard();
+    rendeerMessage();
+    renderControls();
+
+}
