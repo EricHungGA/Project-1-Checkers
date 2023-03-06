@@ -1,0 +1,38 @@
+body {
+    height: 100vh;
+    margin: 0;
+    /* add font family later  */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* add header stuff here later  */
+
+/* add h1 stuff here later  */
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(8,10vmin);
+    grid-template-rows: repeat(8,10vmin);
+}
+
+#board > div {
+    border: 0.1vmin solid goldenrod;
+}
+
+.type-1 {
+    background-color: pink;
+}
+
+.type-2 {
+    background-color: antiquewhite;
+}
+
+button {
+    margin-top: 4vmin;
+    /* customize button here later */
+}
+
+/* add button hover mechanics here later */
