@@ -47,7 +47,7 @@ game-piece1 {
     height: 6vmin;
     width: 6vmin;
     border-radius: 50%;
-    background-color: yellow;
+    background-color: orange;
 }
 
 /* This is player 2s piece design, its name semantically is "-1" */

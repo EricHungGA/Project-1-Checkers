@@ -5,9 +5,8 @@
 const COLORS = {
     '10': 'white',
     '20': 'pink',
-    '1': 'yellow',
+    '1': 'orange',
     '-1': 'black'
-
 };
 
 /*----- state variables -----*/
@@ -17,12 +16,22 @@ let turn; // 1 or -1 for each player
 let winner; // null = no winner, 1 / -1 = winner, add in extra scenarios for deadlocks etc. afterwards
 
 /*----- cached elements  -----*/
-const boardEl = document.getElementById("board"); // this is the board parent with the tile-child divs
+const boardEls = [...document.querySelectorAll("#board > div")]; // this is the board parent with the tile-child divs
 const type1 = document.querySelectorAll('.type-1'); // this is the pink tile aka piece tiles
 
 /*----- event listeners -----*/
-// setup event listeners for board spots that the players select to move their pieces
-// to, but only for the movable board spots. Can also use a guard for this if easier
+// This main event listener is setup to be a function so that it can cache and target the game piece elements AFTER they are rendered/created
+function eventlistenerInit() {
+    const gamePiece1Els = [...document.querySelectorAll('game-piece1')];
+    const gamePieceNegEls = [...document.querySelectorAll('game-piece-1')];
+    // Have to turn these node lists into arrays and iterate through it to attach individual event listeners
+    gamePiece1Els.forEach(function(gamePiece){
+        gamePiece.addEventListener('click', controlPiece);
+    })
+    gamePieceNegEls.forEach(function(gamePiece){
+        gamePiece.addEventListener('click', controlPiece);
+    })
+}
 
 /*----- functions -----*/
 // init function that sets up all the state variables, then calls render
@@ -40,21 +49,29 @@ function init() {
     turn = 1;
     winner = null;
     render();
+    eventlistenerInit();
 }
 
+//This is how the selected pieces move
+function controlPiece(evt) {
+    // have the piece highlighted or something
+    // console.log(evt.target)
+    diagonalCheck(evt);
+}
 
-// This is function for generating a piece on a tile for either player depending on turn
-// function generatePiece(colIdx, rowIdx, turn) {
-//     const newPiece = document.createElement(`game-piece-${turn}`);
-//     const position = document.getElementById(`c${colIdx}r${rowIdx}`);
-//     position.appendChild(newPiece);
-// }
+// This checks for diagonal spaces from a specified game piece
+function diagonalCheck(evt) {
+    // First I need to get the index of the parent div aka the column and row
+    const indexEl = (evt.target.parentNode.id);
+    // Connect this index to the board array
+    const colIdx = indexEl[1];
+    const rowIdx = indexEl[3];
+    console.log('col = ', colIdx, 'row = ', rowIdx);
+    const player = evt.target.localName[10]
+    console.log(player);
+}
 
-// render function that calls multiple sub types of render functions that are
-// more modular, this will include things like render board, render message,
-// render controls, and more. Will also need to setup the piece logic and 
-// win conditions in here
-
+// This is the main render function that calls the sub ones
 function render() {
     renderBoard();
     // renderMessage();
