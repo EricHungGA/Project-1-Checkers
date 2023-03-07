@@ -44,10 +44,14 @@ button {
 
 /* This is player 1s piece design */
 game-piece1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 6vmin;
     width: 6vmin;
     border-radius: 50%;
     background-color: orange;
+    padding: 0px;
 }
 
 /* This is player 2s piece design, its name semantically is "-1" */
@@ -58,7 +62,18 @@ game-piece-1 {
     background-color: black;
 }
 
-/* This is no player's tile */
-game-piece0 {
+/* This is the class for when a piece is selected to move */
+a.highlight-self {
+    margin: 0px;
+    padding: 0px;
+    border: 20px solid pink;
+    border-radius: 50%;
+}
 
+/* This is the class for when you want to show potential moves */
+.highlight-spot {
+    width: 40px;
+    height: 40px;
+    background: cornflowerblue;
+    border-radius: 50%
 }

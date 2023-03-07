@@ -14,6 +14,7 @@ const COLORS = {
 let board; // 8 by 8 array for column + row
 let turn; // 1 or -1 for each player
 let winner; // null = no winner, 1 / -1 = winner, add in extra scenarios for deadlocks etc. afterwards
+let possibleMoveList = []; // this stores my possible moveset for pieces after being run through diagonal check
 
 /*----- cached elements  -----*/
 const boardEls = [...document.querySelectorAll("#board > div")]; // this is the board parent with the tile-child divs
@@ -66,9 +67,67 @@ function diagonalCheck(evt) {
     // Connect this index to the board array
     const colIdx = indexEl[1];
     const rowIdx = indexEl[3];
-    console.log('col = ', colIdx, 'row = ', rowIdx);
-    const player = evt.target.localName[10]
-    console.log(player);
+    const player = evt.target.localName[10] // If 1 then it is player 1, if "-" then it is player 2 (black) // This is a string value
+    diagonalCheckNorth(colIdx, rowIdx, player);
+}
+
+// This function diagonal checks for player 1, checking northwards / upwards
+function diagonalCheckNorth(colIdx, rowIdx, player) {
+    if(player === '1') {
+        //check for the diagonal left first
+        colIdx = parseInt(colIdx);
+        rowIdx = parseInt(rowIdx);
+        let diaLeftCol = board[colIdx - 1]; // set it separately to not get an error in the case its undefined and I try to row index it
+        let diaLeft;
+        if (diaLeftCol !== undefined) {
+            diaLeft = diaLeftCol[rowIdx + 1]
+        }
+
+        if (diaLeft !== undefined && diaLeft === 0) { // this brings us to the correct forward row and guards for outside of the board
+            const possibleMove = `c${colIdx - 1}r${rowIdx + 1}`;
+            possibleMoveList.push(possibleMove); // adding the potential moves into the possibleMoveList array
+        }
+
+        //now check for diagonal right
+        let diaRightCol = board[colIdx + 1];
+        let diaRight;
+        if (diaRightCol !== undefined) {
+            diaRight = diaRightCol[rowIdx + 1];
+        }
+
+        if (diaRightCol !== undefined && diaRight === 0) {
+            const possibleMove = `c${colIdx + 1}r${rowIdx + 1}`;
+            possibleMoveList.push(possibleMove); // adding dia right possible move into array
+        }
+
+        highlight(colIdx, rowIdx); // run highlight on selected piece and potential ones, I am passing in the index of the selected piece      
+
+    } else {
+        diagonalCheckSouth();
+    }
+}
+
+// This function diagonal checks south for player 2, same logic as function 1 but reversed directionality
+function diagonalCheckSouth() {
+
+}
+
+// This function highlights the select pieces and the potential move spots for it
+function highlight(colIdx, rowIdx) {
+    // first select the clicked on piece and create a new highlight child inside of it, make it inside of game piece for flex properties
+    const selectedPieceTile = document.getElementById(`c${colIdx}r${rowIdx}`)
+    const selectedGamePiece = selectedPieceTile.firstChild;
+    const highlightChild = document.createElement('a');
+    selectedGamePiece.appendChild(highlightChild);
+    highlightChild.setAttribute('class', 'highlight-self') // set class of highlight-self to these selected pieces
+    // Now take the possible moveset array and iterate through it for each one to add a highlight item to it
+    possibleMoveList.forEach(function(move){
+        // First I need to connect them to the dom element
+        const tile = document.getElementById(move);
+        const spot = document.createElement('a');
+        tile.appendChild(spot);
+        spot.setAttribute('class','highlight-spot');
+    })
 }
 
 // This is the main render function that calls the sub ones
