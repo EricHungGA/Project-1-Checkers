@@ -66,14 +66,14 @@ game-piece-1 {
 a.highlight-self {
     margin: 0px;
     padding: 0px;
-    border: 20px solid pink;
+    border: 2.4vmin solid pink;
     border-radius: 50%;
 }
 
 /* This is the class for when you want to show potential moves */
 .highlight-spot {
-    width: 40px;
-    height: 40px;
+    width: 5vmin;
+    height: 5vmin;
     background: cornflowerblue;
     border-radius: 50%
 }

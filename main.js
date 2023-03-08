@@ -1,16 +1,13 @@
-// This will be a game of checkers based on the standard rules of play, kings included
+// This will be a game of checkers based on the standard rules of play, kings included if possible
 
 /*----- constants -----*/
-// there will be 4 main colors, one for each player, and two for the board layout of movable vs. non-movable spots
+// there will be 2 main colors, one for each player
 const COLORS = {
-    '10': 'white',
-    '20': 'pink',
     '1': 'orange',
     '-1': 'black'
 };
 
 /*----- state variables -----*/
-//board variable, turn variable, winner variable, game pieces
 let board; // 8 by 8 array for column + row
 let turn; // 1 or -1 for each player
 let winner; // null = no winner, 1 / -1 = winner, add in extra scenarios for deadlocks etc. afterwards
@@ -21,7 +18,7 @@ const boardEls = [...document.querySelectorAll("#board > div")]; // this is the 
 const type1 = document.querySelectorAll('.type-1'); // this is the pink tile aka piece tiles
 
 /*----- event listeners -----*/
-// This main event listener is setup to be a function so that it can cache and target the game piece elements AFTER they are rendered/created
+// This main event listener is setup to be a function so that it can cache & target game piece elements AFTER they are rendered/created
 function eventlistenerInit() {
     const gamePiece1Els = [...document.querySelectorAll('game-piece1')];
     const gamePieceNegEls = [...document.querySelectorAll('game-piece-1')];
@@ -53,22 +50,31 @@ function init() {
     eventlistenerInit();
 }
 
-//This is how the selected pieces move
+//This has 2 parts, select a piece (highlight), then move it to a possible tile
 function controlPiece(evt) {
-    // have the piece highlighted or something
-    // console.log(evt.target)
+    // reset all possible moves HERE
+    possibleMoveList.length = 0;
+    // remove all highlight classes (spot and self) HERE
+    const allHighlights = [...document.querySelectorAll('a')]
+    allHighlights.forEach(function(highlight){
+        highlight.remove();
+    })
+
     diagonalCheck(evt);
+    // add move logic HERE
 }
 
 // This checks for diagonal spaces from a specified game piece
 function diagonalCheck(evt) {
+    // Guard for if they click on a highlighted piece (selected) to not return type error for not having parent id
+    if (evt.target.classList.contains('highlight-self')) {return};
     // First I need to get the index of the parent div aka the column and row
     const indexEl = (evt.target.parentNode.id);
     // Connect this index to the board array
     const colIdx = indexEl[1];
     const rowIdx = indexEl[3];
-    const player = evt.target.localName[10] // If 1 then it is player 1, if "-" then it is player 2 (black) // This is a string value
-    diagonalCheckNorth(colIdx, rowIdx, player);
+    const player = evt.target.localName[10] // If 1 then it is player 1, otherwise player 2(black) // This is a string value
+    diagonalCheckNorth(colIdx, rowIdx, player); // this checks for north and south within it
 }
 
 // This function diagonal checks for player 1, checking northwards / upwards
@@ -82,26 +88,21 @@ function diagonalCheckNorth(colIdx, rowIdx, player) {
         if (diaLeftCol !== undefined) {
             diaLeft = diaLeftCol[rowIdx + 1]
         }
-
         if (diaLeft !== undefined && diaLeft === 0) { // this brings us to the correct forward row and guards for outside of the board
             const possibleMove = `c${colIdx - 1}r${rowIdx + 1}`;
             possibleMoveList.push(possibleMove); // adding the potential moves into the possibleMoveList array
         }
-
         //now check for diagonal right
         let diaRightCol = board[colIdx + 1];
         let diaRight;
         if (diaRightCol !== undefined) {
             diaRight = diaRightCol[rowIdx + 1];
         }
-
         if (diaRightCol !== undefined && diaRight === 0) {
             const possibleMove = `c${colIdx + 1}r${rowIdx + 1}`;
             possibleMoveList.push(possibleMove); // adding dia right possible move into array
         }
-
-        highlight(colIdx, rowIdx); // run highlight on selected piece and potential ones, I am passing in the index of the selected piece      
-
+        highlight(colIdx, rowIdx); // run highlight on selected piece and potential ones, I am passing in the index of the selected piece
     } else {
         diagonalCheckSouth();
     }
@@ -128,6 +129,7 @@ function highlight(colIdx, rowIdx) {
         tile.appendChild(spot);
         spot.setAttribute('class','highlight-spot');
     })
+    // Need to add move
 }
 
 // This is the main render function that calls the sub ones
