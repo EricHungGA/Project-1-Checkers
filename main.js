@@ -2,7 +2,6 @@
 
 //scenarios to test for later
 
-// if they click on a piece multiple times and assign multiple to be eaten classes
 // if there are two capturable pieces / moves possible at once
 // double jump logic where if you CAN then it stays your turn until the jumps end
 
@@ -57,6 +56,31 @@ function init() {
     winner = null;
     render();
     eventlistenerInit();
+}
+
+// This is the check for winner function that happens every turn
+function getWinner() {
+    console.log('winner is being checked')
+    let player1PieceCount = 0;
+    let player2PieceCount = 0;
+    board.forEach(function(colArr){
+        colArr.forEach(function(cellVal){
+            if (cellVal === 1) {
+                player1PieceCount += 1;
+            } else if (cellVal === -1) {
+                player2PieceCount += 1;
+            } else {
+                return;
+            }
+        })
+    })
+    if (player1PieceCount === 0){
+        return 'Player 2' // because player 2 wins if there are no player 1 pieces
+    } else if (player2PieceCount === 0) {
+        return 'Player 1'
+    } else {
+        return null
+    }
 }
 
 //This has 2 parts, select a piece (highlight), then move it to a possible tile
@@ -435,6 +459,7 @@ function renderBoard() {
             };
     })
 })
+winner = getWinner();
 turn *= -1;
 }
 
