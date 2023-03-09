@@ -8,9 +8,16 @@ body {
     align-items: center;
 }
 
-/* add header stuff here later  */
+header {
+    font-family: 'Titan One';
+    font-size: 6vmin;
+    margin-top: 6vmin;
+}
 
-/* add h1 stuff here later  */
+h1 {
+    font-family: 'Tilt Neon';
+    font-size: 4vmin;
+}
 
 #board {
     display: grid;
