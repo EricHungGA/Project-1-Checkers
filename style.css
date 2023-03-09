@@ -56,6 +56,9 @@ game-piece1 {
 
 /* This is player 2s piece design, its name semantically is "-1" */
 game-piece-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 6vmin;
     width: 6vmin;
     border-radius: 50%;
@@ -76,4 +79,9 @@ a.highlight-self {
     height: 5vmin;
     background: cornflowerblue;
     border-radius: 50%
+}
+
+/* This is the to-be-eaten class */
+.to-be-eaten {
+    background-color: antiquewhite;
 }
