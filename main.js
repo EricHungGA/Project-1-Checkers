@@ -42,7 +42,17 @@ function eventlistenerInit() {
 /*----- functions -----*/
 // init function that sets up all the state variables, then calls render
 function init() {
+    removeGamePieces();
     board = [
+        // [0,0,0,0,0,0,0,0], // column 0 (on far left side of board)
+        // [0,0,0,0,0,0,0,0], // column 1
+        // [0,0,0,0,0,0,0,0], // column 2
+        // [0,0,0,0,0,0,0,0], // column 3
+        // [0,0,1,0,0,0,0,0], // column 4
+        // [0,0,0,0,0,-1,0,0], // column 5
+        // [0,0,0,0,0,0,0,0], // column 6
+        // [0,0,0,0,0,0,0,0], // column 7 (on far right side of board)
+
         [1,0,1,0,0,0,-1,0], // column 0 (on far left side of board)
         [0,1,0,0,0,-1,0,-1], // column 1
         [1,0,1,0,0,0,-1,0], // column 2
@@ -52,15 +62,27 @@ function init() {
         [1,0,1,0,0,0,-1,0], // column 6
         [0,1,0,0,0,-1,0,-1], // column 7 (on far right side of board)
     ];
+    console.log('init got called, board is generated')
     turn = -1;
     winner = null;
     render();
     eventlistenerInit();
 }
 
+// remove all game piece function as extra guard if needed for init
+function removeGamePieces() {
+    const allGamePiece1Els = [...document.querySelectorAll('game-piece1')];
+    allGamePiece1Els.forEach(function(piece){
+        piece.remove();
+    })
+    const allGamePieceNegEls = [...document.querySelectorAll('game-piece-1')];
+    allGamePieceNegEls.forEach(function(piece){
+        piece.remove();
+    })
+}
+
 // This is the check for winner function that happens every turn
 function getWinner() {
-    console.log('winner is being checked')
     let player1PieceCount = 0;
     let player2PieceCount = 0;
     board.forEach(function(colArr){
@@ -442,16 +464,18 @@ function renderBoard() {
             const position = document.getElementById(`c${colIdx}r${rowIdx}`);
             if (cellVal === 1 && !position.hasChildNodes()) { // checking for 1 and if it doesn't already have a piece or child node
                 position.appendChild(newPiece);
+                console.log('cellval 1 child has been added')
             }
             if (cellVal === -1 && !position.hasChildNodes()) { // checking for -1 same logic
                 position.appendChild(newPiece);
+                console.log('cellval -1 child has been added')
             }
-            if (!position.hasChildNodes() && cellVal === 1) { // checking if it doesn't have children but has a 1 or -1 value, and if so turning it into 0
-                    cellVal = 0;
-            }
-            if (!position.hasChildNodes() && cellVal === -1) { // checking -1 same logic as above
-                    cellVal = 0;
-            }
+            // if (!position.hasChildNodes() && cellVal === 1) { // checking if it doesn't have children but has a 1 or -1 value, and if so turning it into 0
+            //         cellVal = 0;
+            // }
+            // if (!position.hasChildNodes() && cellVal === -1) { // checking -1 same logic as above
+            //         cellVal = 0;
+            // }
             if (cellVal === 0) { // checking for 0 values and removing their childs
                 while (position.hasChildNodes()) {
                     position.removeChild(position.firstChild);
