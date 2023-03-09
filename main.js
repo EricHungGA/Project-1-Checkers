@@ -1,10 +1,3 @@
-// This will be a game of checkers based on the standard rules of play, kings included if possible
-
-//scenarios to test for later
-
-// if there are two capturable pieces / moves possible at once
-// double jump logic where if you CAN then it stays your turn until the jumps end
-
 /*----- constants -----*/
 const gamePlayers = {
     '1': 'Player 1',
@@ -40,19 +33,12 @@ function eventlistenerInit() {
 }
 
 /*----- functions -----*/
+init();
+
 // init function that sets up all the state variables, then calls render
 function init() {
     removeGamePieces();
     board = [
-        // [0,0,0,0,0,0,0,0], // column 0 (on far left side of board)
-        // [0,0,0,0,0,0,0,0], // column 1
-        // [0,0,0,0,0,0,0,0], // column 2
-        // [0,0,0,0,0,0,0,0], // column 3
-        // [0,0,1,0,0,0,0,0], // column 4
-        // [0,0,0,0,0,-1,0,0], // column 5
-        // [0,0,0,0,0,0,0,0], // column 6
-        // [0,0,0,0,0,0,0,0], // column 7 (on far right side of board)
-
         [1,0,1,0,0,0,-1,0], // column 0 (on far left side of board)
         [0,1,0,0,0,-1,0,-1], // column 1
         [1,0,1,0,0,0,-1,0], // column 2
@@ -62,7 +48,6 @@ function init() {
         [1,0,1,0,0,0,-1,0], // column 6
         [0,1,0,0,0,-1,0,-1], // column 7 (on far right side of board)
     ];
-    console.log('init got called, board is generated')
     turn = -1;
     winner = null;
     render();
@@ -223,7 +208,6 @@ function diagonalCheckSouth(colIdx, rowIdx, player) {
     }
 }
 
-
 // This checks for capture move options and forces them to only show it if present - for player 1 north facing
 function captureCheckNorth(evt) {
     if (evt.target.classList.contains('highlight-self')) {return}; // same guard as diagonal check
@@ -284,7 +268,7 @@ function enemyDiaNorthCheck(colIdx, rowIdx, player, evt) {
     }
 }
 
-// This checks for diagonal spaces from a specified game piece
+// This checks for diagonal spaces from a specified game piece -- for player 1
 function diagonalCheck(evt) {
     // Guard for if they click on a highlighted piece (selected) to not return type error for not having parent id
     if (evt.target.classList.contains('highlight-self')) {return};
@@ -396,7 +380,7 @@ function movePiece(evt){
             })
         }}
         //create same logic but for player 2
-    if (player === '-') {
+        if (player === '-') {
         let targetId = evt.target.parentNode.id;
         let colIdx = targetId[1];
         let rowIdx = targetId[3];
@@ -430,7 +414,6 @@ function movePiece(evt){
         captureMoveList.length = 0;
         render();
         eventlistenerInit();
-    
 }
 
 // This is the main render function that calls the sub ones
@@ -464,11 +447,9 @@ function renderBoard() {
             const position = document.getElementById(`c${colIdx}r${rowIdx}`);
             if (cellVal === 1 && !position.hasChildNodes()) { // checking for 1 and if it doesn't already have a piece or child node
                 position.appendChild(newPiece);
-                console.log('cellval 1 child has been added')
             }
             if (cellVal === -1 && !position.hasChildNodes()) { // checking for -1 same logic
                 position.appendChild(newPiece);
-                console.log('cellval -1 child has been added')
             }
             // if (!position.hasChildNodes() && cellVal === 1) { // checking if it doesn't have children but has a 1 or -1 value, and if so turning it into 0
             //         cellVal = 0;
@@ -486,6 +467,3 @@ function renderBoard() {
 winner = getWinner();
 turn *= -1;
 }
-
-
-init();
