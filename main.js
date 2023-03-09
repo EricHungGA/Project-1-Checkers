@@ -7,7 +7,10 @@
 // double jump logic where if you CAN then it stays your turn until the jumps end
 
 /*----- constants -----*/
-
+const gamePlayers = {
+    '1': 'Player 1',
+    '-1': 'Player 2'
+};
 /*----- state variables -----*/
 let board; // 8 by 8 array for column + row
 let turn; // 1 or -1 for each player
@@ -18,8 +21,12 @@ let captureMoveList = []; // this stores the possible capture moveset for pieces
 /*----- cached elements  -----*/
 const boardEls = [...document.querySelectorAll("#board > div")]; // this is the board parent with the tile-child divs
 const type1 = document.querySelectorAll('.type-1'); // this is the pink tile aka piece tiles
+const h1El = document.querySelector('h1'); // this is the h1 that says 'your turn' etc.
+const newGameButton = document.querySelector('button'); // this is the new game button at bottom
 
 /*----- event listeners -----*/
+// New game button event listener
+newGameButton.addEventListener('click', init);
 // This main event listener is setup to be a function so that it can cache & target game piece elements AFTER they are rendered/created
 function eventlistenerInit() {
     const gamePiece1Els = [...document.querySelectorAll('game-piece1')];
@@ -54,8 +61,6 @@ function init() {
 
 //This has 2 parts, select a piece (highlight), then move it to a possible tile
 function controlPiece(evt) {
-    // reset all capture moves HERE
-    // captureMoveList.length = 0;
     // reset all possible moves HERE
     possibleMoveList.length = 0;
     // remove all highlight classes (spot and self) HERE
@@ -63,11 +68,9 @@ function controlPiece(evt) {
     allHighlights.forEach(function(highlight){
         highlight.remove();
     })
-
     if (turn === 1) {
         captureCheckNorth(evt); // this is for player 1 logic only
     } else { // insert player 2 logic here
-        console.log('entering capture check south meaning turn is not 1!')
         captureCheckSouth(evt);
     }
 }
@@ -79,7 +82,6 @@ function captureCheckSouth(evt) {
     const colIdx = indexEl[1];
     const rowIdx = indexEl[3];
     const player = evt.target.localName[10] // player will equal "-"
-    console.log('entering enemyDiaSouthCheck function')
     enemyDiaSouthCheck(colIdx, rowIdx, player, evt);
 }
 
@@ -125,12 +127,9 @@ function enemyDiaSouthCheck(colIdx, rowIdx, player, evt) {
                 eatenPiece.className += ' to-be-eaten'
             }
         }
-        console.log('logging capture moves here after they are checked', captureMoveList)
         if (captureMoveList.length > 0) {
-            console.log('capture move length is > 0, we are going to highlight them')
             highlight(colIdx, rowIdx); // basically just highlights self and checks...
         } else {
-            console.log('found no capture moves, running dia check south init now')
             diagonalCheckSouthInit(evt); // CHECKING HERE NOW
         }
     }
@@ -146,14 +145,12 @@ function diagonalCheckSouthInit(evt) {
     const colIdx = indexEl[1];
     const rowIdx = indexEl[3];
     const player = evt.target.localName[10] // Reminder this will equal "-"
-    console.log('this is in diagonal check south init, player val =', player)
     diagonalCheckSouth(colIdx, rowIdx, player); // this checks for south within it
 }
 
 // This is the diag south check LOGIC
 function diagonalCheckSouth(colIdx, rowIdx, player) {
     if (player === '-') {
-        console.log('made it into the diagonal check south logic')
         //check for the diagonal left first
         colIdx = parseInt(colIdx);
         rowIdx = parseInt(rowIdx);
@@ -165,7 +162,6 @@ function diagonalCheckSouth(colIdx, rowIdx, player) {
         if (diaLeft !== undefined && diaLeft === 0) { // this brings us to the correct forward row and guards for outside of the board
             const possibleMove = `c${colIdx - 1}r${rowIdx - 1}`;
             possibleMoveList.push(possibleMove); // adding the potential moves into the possibleMoveList array
-            console.log('this is when possible move left is added', possibleMoveList)
         }
         //now check for diagonal right
         let diaRightCol = board[colIdx + 1];
@@ -176,7 +172,6 @@ function diagonalCheckSouth(colIdx, rowIdx, player) {
         if (diaRightCol !== undefined && diaRight === 0) {
             const possibleMove = `c${colIdx + 1}r${rowIdx - 1}`;
             possibleMoveList.push(possibleMove); // adding dia right possible move into array
-            console.log('this is when possible move right is added', possibleMoveList)
         }
         highlight(colIdx, rowIdx); // run highlight on selected piece and potential ones, I am passing in the index of the selected piece
     }
@@ -287,17 +282,14 @@ function diagonalCheckNorth(colIdx, rowIdx, player) {
 
 // This function highlights the select pieces and the potential move spots for it
 function highlight(colIdx, rowIdx) {
-    console.log('we have entered highlight func')
     // first select the clicked on piece and create a new highlight child inside of it, make it inside of game piece for flex properties
     const selectedPieceTile = document.getElementById(`c${colIdx}r${rowIdx}`)
     const selectedGamePiece = selectedPieceTile.firstChild;
     const highlightChild = document.createElement('a');
     selectedGamePiece.appendChild(highlightChild);
     highlightChild.setAttribute('class', 'highlight-self') // set class of highlight-self to these selected pieces
-    console.log('we have created the highlight-self class and set it successfully')
     // Check the capture array first and then stop the function if its length > 0  so that we don't allow other moves
     if (captureMoveList.length > 0){
-        console.log('*** you have entered the capturemove conditional in the highlight func')
         captureMoveList.forEach(function(move){
             const tile = document.getElementById(move);
             const spot = document.createElement('a');
@@ -318,7 +310,6 @@ function highlight(colIdx, rowIdx) {
         const highlightSpotEls = [...document.querySelectorAll('.highlight-spot')];
     highlightSpotEls.forEach(function(spot){
         spot.addEventListener('click', movePiece) // move piece function called here
-        console.log('event listeners were added to each highlight-spot')
     })
 }
 
@@ -327,7 +318,6 @@ function movePiece(evt){
     let player = document.querySelector('.highlight-self');
     player = player.parentNode.localName;
     player = player[10] // getting just the 1 value if its a player 1 piece, or '-' if its player 2
-    console.log('we are in the movepiece cb func, player =', player)
     if (player === '1') {
         let targetId = evt.target.parentNode.id;
         let colIdx = targetId[1];
@@ -360,9 +350,7 @@ function movePiece(evt){
             })
         }}
         //create same logic but for player 2
-    console.log('player is',player)
     if (player === '-') {
-        console.log('we enter player 2 logic')
         let targetId = evt.target.parentNode.id;
         let colIdx = targetId[1];
         let rowIdx = targetId[3];
@@ -394,7 +382,7 @@ function movePiece(evt){
             })
         }}
         captureMoveList.length = 0;
-        renderBoard();
+        render();
         eventlistenerInit();
     
 }
@@ -402,9 +390,23 @@ function movePiece(evt){
 // This is the main render function that calls the sub ones
 function render() {
     renderBoard();
-    // renderMessage();
-    // renderControls();
+    renderMessage();
+    renderControls();
+}
 
+// This is the render for the button to active / dissapear
+function renderControls() {
+    newGameButton.style.visibility = winner ? 'visible': 'hidden';
+}
+
+// This function displays who's turn it is
+function renderMessage() {
+    if (winner) {
+        h1El.innerHTML = `${winner} wins!`
+    } else {
+        //game is still going
+        h1El.innerHTML = `${gamePlayers[turn]}'s Turn`
+    };
 }
 
 // This function will render the pieces on the board, it should be called every turn and on initialize
@@ -432,7 +434,9 @@ function renderBoard() {
                 }
             };
     })
-})}
+})
+turn *= -1;
+}
 
 
 init();
