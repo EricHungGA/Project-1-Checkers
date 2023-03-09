@@ -451,12 +451,6 @@ function renderBoard() {
             if (cellVal === -1 && !position.hasChildNodes()) { // checking for -1 same logic
                 position.appendChild(newPiece);
             }
-            // if (!position.hasChildNodes() && cellVal === 1) { // checking if it doesn't have children but has a 1 or -1 value, and if so turning it into 0
-            //         cellVal = 0;
-            // }
-            // if (!position.hasChildNodes() && cellVal === -1) { // checking -1 same logic as above
-            //         cellVal = 0;
-            // }
             if (cellVal === 0) { // checking for 0 values and removing their childs
                 while (position.hasChildNodes()) {
                     position.removeChild(position.firstChild);
