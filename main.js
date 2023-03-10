@@ -16,8 +16,6 @@ let possibleMoveList = []; // this stores my possible moveset for pieces after b
 let captureMoveList = []; // this stores the possible capture moveset for pieces BEFORE being run through diagonal check
 
 /*----- cached elements  -----*/
-const boardEls = [...document.querySelectorAll("#board > div")]; // this is the board parent with the tile-child divs
-const type1 = document.querySelectorAll('.type-1'); // this is the pink tile aka piece tiles
 const h1El = document.querySelector('h1'); // this is the h1 that says 'your turn' etc.
 const newGameButton = document.querySelector('button'); // this is the new game button at bottom
 
