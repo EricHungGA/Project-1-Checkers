@@ -25,7 +25,7 @@ My design choice was based on __________________
 
 # Live Demo & Game Visuals
 
-You can access the live demo section here ____________
+You can access the live demo [right here](https://erichungga.github.io/Project-1-Checkers/)
 
 </br>
 

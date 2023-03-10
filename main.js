@@ -1,8 +1,13 @@
 /*----- constants -----*/
 const gamePlayers = {
-    '1': 'Player 1',
-    '-1': 'Player 2'
+    '1': 'Pancake',
+    '-1': 'Evil Pudding'
 };
+
+const colors = {
+    '1': 'lemonchiffon',
+    '-1': 'maroon'
+}
 /*----- state variables -----*/
 let board; // 8 by 8 array for column + row
 let turn; // 1 or -1 for each player
@@ -39,14 +44,23 @@ init();
 function init() {
     removeGamePieces();
     board = [
-        [1,0,1,0,0,0,-1,0], // column 0 (on far left side of board)
-        [0,1,0,0,0,-1,0,-1], // column 1
-        [1,0,1,0,0,0,-1,0], // column 2
-        [0,1,0,0,0,-1,0,-1], // column 3
-        [1,0,1,0,0,0,-1,0], // column 4
-        [0,1,0,0,0,-1,0,-1], // column 5
-        [1,0,1,0,0,0,-1,0], // column 6
-        [0,1,0,0,0,-1,0,-1], // column 7 (on far right side of board)
+        // [1,0,1,0,0,0,-1,0], // column 0 (on far left side of board)
+        // [0,1,0,0,0,-1,0,-1], // column 1
+        // [1,0,1,0,0,0,-1,0], // column 2
+        // [0,1,0,0,0,-1,0,-1], // column 3
+        // [1,0,1,0,0,0,-1,0], // column 4
+        // [0,1,0,0,0,-1,0,-1], // column 5
+        // [1,0,1,0,0,0,-1,0], // column 6
+        // [0,1,0,0,0,-1,0,-1], // column 7 (on far right side of board)
+
+        [0,0,0,0,0,0,0,0], // column 0 (on far left side of board)
+        [0,0,0,0,0,0,0,0], // column 1
+        [0,0,0,0,0,0,0,0], // column 2
+        [0,0,0,0,0,-1,0,0], // column 3
+        [0,0,1,0,0,0,0,0], // column 4
+        [0,0,0,0,0,0,0,0], // column 5
+        [0,0,0,0,0,0,0,0], // column 6
+        [0,0,0,0,0,0,0,0], // column 7 (on far right side of board)
     ];
     turn = -1;
     winner = null;
@@ -82,9 +96,9 @@ function getWinner() {
         })
     })
     if (player1PieceCount === 0){
-        return 'Player 2' // because player 2 wins if there are no player 1 pieces
+        return 'Evil Pudding' // because player 2 wins if there are no player 1 pieces
     } else if (player2PieceCount === 0) {
-        return 'Player 1'
+        return 'Pancake'
     } else {
         return null
     }
@@ -434,7 +448,7 @@ function renderMessage() {
         h1El.innerHTML = `${winner} wins!`
     } else {
         //game is still going
-        h1El.innerHTML = `${gamePlayers[turn]}'s Turn`
+        h1El.innerHTML = `<span style="color: ${colors[turn]}"> ${gamePlayers[turn]}'s Turn </span>`
     };
 }
 

@@ -1,22 +1,26 @@
 body {
     height: 100vh;
     margin: 0;
-    /* add font family later  */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: url("https://wallpaperaccess.com/full/8351171.gif");
+    background-size:cover;
 }
 
 header {
     font-family: 'Titan One';
-    font-size: 6vmin;
-    margin-top: 6vmin;
+    font-size: 5vmin;
+    margin-top: 4vmin;
+    color: peachpuff;
 }
 
 h1 {
     font-family: 'Tilt Neon';
     font-size: 4vmin;
+    margin-top: 0;
+    margin-bottom: 1vmin;
 }
 
 #board {
@@ -43,22 +47,30 @@ h1 {
 }
 
 button {
-    margin-top: 4vmin;
-    /* customize button here later */
+    font-family: 'Tilt Neon';
+    margin-top: 1vmin;
+    margin-bottom: 2vmin;
+    padding: 1.5vmin;
+    font-size: 1.75vmin;
+    border-radius: 4vmin;
+    border: 0.1vmin solid grey;
+    background-color:indigo;
+    color:antiquewhite;
 }
-
-/* add button hover mechanics here later */
 
 /* This is player 1s piece design */
 game-piece1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 6vmin;
-    width: 6vmin;
+    height: 7vmin;
+    width: 7vmin;
     border-radius: 50%;
     background-color: orange;
     padding: 0px;
+    background: url("https://i.pinimg.com/originals/30/b2/e6/30b2e6c2dcc87b553b611afd00a4afaa.gif");
+    background-size: contain;
+    background-position: center;
 }
 
 /* This is player 2s piece design, its name semantically is "-1" */
@@ -66,25 +78,34 @@ game-piece-1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 6vmin;
-    width: 6vmin;
+    height: 8vmin;
+    width: 8vmin;
     border-radius: 50%;
     background-color: black;
+    background: url("https://i.pinimg.com/originals/50/3d/c7/503dc7e602a2a4bb2e2ae7bd31bac45d.gif");
+    background-size: contain;
+    background-position: center;
 }
 
 /* This is the class for when a piece is selected to move */
 a.highlight-self {
     margin: 0px;
     padding: 0px;
-    border: 2.4vmin solid pink;
+    width: 6vmin;
+    height: 6vmin;
+    border: 0.5vmin solid pink;
     border-radius: 50%;
+    background: url("https://i.pinimg.com/originals/1d/bb/30/1dbb3025fa18cc4d96fea6f6b729d91a.gif");
+    background-size: contain;
 }
 
 /* This is the class for when you want to show potential moves */
 .highlight-spot {
-    width: 5vmin;
-    height: 5vmin;
-    background: cornflowerblue;
+    width: 7vmin;
+    height: 7vmin;
+    background: url("https://i.pinimg.com/originals/19/3c/0f/193c0f3f6814d76c6874e9a60d9df145.gif");
+    background-size: contain;
+    background-position: center;
     border-radius: 50%
 }
 
