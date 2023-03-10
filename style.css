@@ -90,12 +90,12 @@ game-piece-1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 8vmin;
-    width: 8vmin;
+    height: 6.5vmin;
+    width: 6.5vmin;
     border-radius: 50%;
     background-color: black;
     background: url("https://i.pinimg.com/originals/50/3d/c7/503dc7e602a2a4bb2e2ae7bd31bac45d.gif");
-    background-size: contain;
+    background-size: cover;
     background-position: center;
 }
 
