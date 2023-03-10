@@ -44,23 +44,14 @@ init();
 function init() {
     removeGamePieces();
     board = [
-        // [1,0,1,0,0,0,-1,0], // column 0 (on far left side of board)
-        // [0,1,0,0,0,-1,0,-1], // column 1
-        // [1,0,1,0,0,0,-1,0], // column 2
-        // [0,1,0,0,0,-1,0,-1], // column 3
-        // [1,0,1,0,0,0,-1,0], // column 4
-        // [0,1,0,0,0,-1,0,-1], // column 5
-        // [1,0,1,0,0,0,-1,0], // column 6
-        // [0,1,0,0,0,-1,0,-1], // column 7 (on far right side of board)
-
-        [0,0,0,0,0,0,0,0], // column 0 (on far left side of board)
-        [0,0,0,0,0,0,0,0], // column 1
-        [0,0,0,0,0,0,0,0], // column 2
-        [0,0,0,0,0,-1,0,0], // column 3
-        [0,0,1,0,0,0,0,0], // column 4
-        [0,0,0,0,0,0,0,0], // column 5
-        [0,0,0,0,0,0,0,0], // column 6
-        [0,0,0,0,0,0,0,0], // column 7 (on far right side of board)
+        [1,0,1,0,0,0,-1,0], // column 0 (on far left side of board)
+        [0,1,0,0,0,-1,0,-1], // column 1
+        [1,0,1,0,0,0,-1,0], // column 2
+        [0,1,0,0,0,-1,0,-1], // column 3
+        [1,0,1,0,0,0,-1,0], // column 4
+        [0,1,0,0,0,-1,0,-1], // column 5
+        [1,0,1,0,0,0,-1,0], // column 6
+        [0,1,0,0,0,-1,0,-1], // column 7 (on far right side of board)
     ];
     turn = -1;
     winner = null;
